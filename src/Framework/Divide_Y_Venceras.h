@@ -23,7 +23,7 @@ class Divide_Y_Venceras {
 	virtual std::vector<std::vector<int>> dividir (std::vector<int> entrada) const = 0;
 	virtual void combinar (std::vector<int> &solucion1, std::vector<int> &solucion2) const = 0;
 
-	std::vector<int> resolver (std::vector<int> entrada, int tamano);
+	std::vector<int> resolver (std::vector<int> entrada);
 	int resolver (std::vector<int> entrada, int tamano, int dato);
 	void resolver (int numeroDiscos, std::vector<int> &origen, std::vector<int> &destino, std::vector<int> &auxiliar);
 
@@ -40,13 +40,13 @@ class Divide_Y_Venceras {
  * @return {std::vector<int>}
 */
 std::vector<int>
-Divide_Y_Venceras::resolver (std::vector<int> entrada, int tamano) {
+Divide_Y_Venceras::resolver (std::vector<int> entrada) {
   if (tamaño(entrada.size())) {
     return resolverPequeño(entrada);
   } else {
     std::vector<std::vector<int>> division = dividir(entrada);
-    std::vector<int> solucion1 = resolver(division[0], tamano/2);
-    std::vector<int> solucion2 = resolver(division[1], tamano/2);
+    std::vector<int> solucion1 = resolver(division[0]);
+    std::vector<int> solucion2 = resolver(division[1]);
     combinar(solucion1, solucion2);
     return solucion1;
   }	
@@ -55,8 +55,9 @@ Divide_Y_Venceras::resolver (std::vector<int> entrada, int tamano) {
 /**
  * Resuelve de forma recursiva un algoritmo de busqueda usando Divide y Venceras
  * @param {std::vector<int>} entrada  -  Cadena de numeros
- * @param {int} numeroTotalDeLlamadas  -  Numero de iteraciones del programa
- * @return {std::vector<int>}
+ * @param {int} tamano  -  tamaño del vector
+ * @param {int} dato  -  dato q se busca
+ * @return {int}
 */
 int
 Divide_Y_Venceras::resolver (std::vector<int> entrada, int tamano, int dato) {
@@ -80,9 +81,11 @@ Divide_Y_Venceras::resolver (std::vector<int> entrada, int tamano, int dato) {
 
 /**
  * Resuelve de forma recursiva un algoritmo de Torres de hanoi usando Divide y Venceras
- * @param {std::vector<int>} entrada  -  Cadena de numeros
  * @param {int} numeroTotalDeLlamadas  -  Numero de iteraciones del programa
- * @return {std::vector<int>}
+ * @param {std::vector<int>} origen  -  Cadena de numeros
+ * @param {std::vector<int>} destino  -  Cadena de numeros
+ * @param {std::vector<int>} auxiliar  -  Cadena de numeros
+ * @return {void}
 */
 void
 Divide_Y_Venceras::resolver (int numeroDiscos, std::vector<int> &origen, std::vector<int> &destino, std::vector<int> &auxiliar) {

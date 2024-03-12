@@ -21,6 +21,7 @@
 #include "Framework/Quicksort.h"
 #include "Framework/BusquedaBinaria.h"
 #include "Framework/TorresHanoi.h"
+#include "Framework/Euclides.h"
 
 
 
@@ -74,9 +75,10 @@ int main (int argv, char* argc[]) {
     std::cout << "(2)Mergesort" << std::endl;
     std::cout << "(3)Busqueda Binaria" << std::endl;
     std::cout << "(4)Torre de Hanoi" << std::endl;
+    std::cout << "(5)Euclides" << std::endl;
     std::cout << "Elije el algoritmo: ";
     std::cin >> tipoAlgoritmo;
-    if (tipoAlgoritmo == 1 || tipoAlgoritmo == 2 || tipoAlgoritmo == 3 || tipoAlgoritmo == 4) {
+    if (tipoAlgoritmo == 1 || tipoAlgoritmo == 2 || tipoAlgoritmo == 3 || tipoAlgoritmo == 4 || tipoAlgoritmo == 5) {
       break;
     } else {
       std::cout << "Elije un algoritmo de la lista, para elegir el algoritmo deseado pone el numero que esta entre parentesis" << std::endl; 
@@ -95,7 +97,7 @@ int main (int argv, char* argc[]) {
         for (int i = 0; i < 3; ++i) {
           std::vector<int> &cadena = (i == 0) ? cadenaPequeña : ((i == 1) ? cadenaMediana : cadenaGrande);
           auto start_time = std::chrono::high_resolution_clock::now();
-          std::vector<int> resultado = algoritmo->resolver(cadena, cadena.size());
+          std::vector<int> resultado = algoritmo->resolver(cadena);
           auto end_time = std::chrono::high_resolution_clock::now();
           auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
           std::cout << "Cadena inicial: {";
@@ -114,7 +116,7 @@ int main (int argv, char* argc[]) {
         int tamaño = obtenerNumero();
         std::vector<int> cadena = generarVectorAleatorio(tamaño);
         auto start_time = std::chrono::high_resolution_clock::now();
-        std::vector<int> resultado = algoritmo->resolver(cadena, cadena.size());
+        std::vector<int> resultado = algoritmo->resolver(cadena);
         auto end_time = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
         std::cout << "Cadena inicial: {";
@@ -140,7 +142,7 @@ int main (int argv, char* argc[]) {
         for (int i = 0; i < 3; ++i) {
           std::vector<int> &cadena = (i == 0) ? cadenaPequeña : ((i == 1) ? cadenaMediana : cadenaGrande);
           auto start_time = std::chrono::high_resolution_clock::now();
-          std::vector<int> resultado = algoritmo->resolver(cadena, cadena.size());
+          std::vector<int> resultado = algoritmo->resolver(cadena);
           auto end_time = std::chrono::high_resolution_clock::now();
           auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
           std::cout << "Cadena inicial: {";
@@ -159,7 +161,7 @@ int main (int argv, char* argc[]) {
         int tamaño = obtenerNumero();
         std::vector<int> cadena = generarVectorAleatorio(tamaño);
         auto start_time = std::chrono::high_resolution_clock::now();
-        std::vector<int> resultado = algoritmo->resolver(cadena, cadena.size());
+        std::vector<int> resultado = algoritmo->resolver(cadena);
         auto end_time = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
         std::cout << "Cadena inicial: {";
@@ -190,6 +192,7 @@ int main (int argv, char* argc[]) {
           auto end_time = std::chrono::high_resolution_clock::now();
           auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
           std::cout << "Numero buscado (" << dato << ")" << std::endl;
+          std::cout << "Cadena inicial: {";
           for (int i = 0; i < cadena.size() - 1; i++) {
             std::cout << cadena[i] << ", ";
           }
@@ -206,6 +209,7 @@ int main (int argv, char* argc[]) {
         auto end_time = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
         std::cout << "Numero buscado (" << dato << ")" << std::endl;
+        std::cout << "Cadena inicial: {";
         for (int i = 0; i < cadena.size() - 1; i++) {
           std::cout << cadena[i] << ", ";
         }
@@ -259,6 +263,41 @@ int main (int argv, char* argc[]) {
         for (int i = numDiscos - 1; i >= 0; i--) {
           std::cout << "[ ] [ ] [" << aguja_C[i] << "]" << std::endl; 
         }
+        std::cout << "Tiempo de ejecución: " << duration.count() << " microsegundos" << std::endl;
+      }
+      break;
+    case 5:
+      std::cout << "Algoritmo Euclides" << std::endl;
+      algoritmo = new Euclides;
+      std::srand(static_cast<unsigned int>(std::time(nullptr)));
+      if (argc[1][0] == '0') {
+        std::vector<int> cadena = {8,12};
+        for (int i = 0; i < 3; ++i) {
+          auto start_time = std::chrono::high_resolution_clock::now();
+          std::vector<int> encontrado = algoritmo->resolver(cadena);
+          auto end_time = std::chrono::high_resolution_clock::now();
+          auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
+          std::cout << "Cadena inicial: {";
+          for (int i = 0; i < cadena.size() - 1; i++) {
+            std::cout << cadena[i] << ", ";
+          }
+          std::cout << cadena[cadena.size() - 1] << "}" << std::endl;
+          std::cout << "Tiempo de ejecución: " << duration.count() << " microsegundos" << std::endl;
+        }
+      } else {
+        int tamaño = obtenerNumero();
+        std::vector<int> cadena = generarVectorOrdenado(tamaño);
+        int dato = cadena[std::rand() % cadena.size()];
+        auto start_time = std::chrono::high_resolution_clock::now();
+        int encontrado = algoritmo->resolver(cadena, cadena.size(), dato);
+        auto end_time = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
+        std::cout << "Cadena inicial: {";
+        for (int i = 0; i < cadena.size() - 1; i++) {
+          std::cout << cadena[i] << ", ";
+        }
+        std::cout << cadena[cadena.size() - 1] << "}" << std::endl;
+        std::cout << "Resultado encontrado: " << encontrado << std::endl << std::endl;
         std::cout << "Tiempo de ejecución: " << duration.count() << " microsegundos" << std::endl;
       }
       break;
